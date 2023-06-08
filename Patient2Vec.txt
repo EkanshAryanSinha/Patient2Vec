@@ -1,0 +1,54 @@
+Summary
+
+Python Code Interpretation - 
+
+To run the code, first I had to download and install two modules using the command "pip install {module name}". These two were 'torch' and 'numpy'. To do that, I opened the terminal in PyCharm and typed 'pip install torch' and 'pip install numpy'. 
+
+The code starts with importing modules like "torch, torch.nn, torch.optim, torch.autograd, and numpy."
+
+Numpy is used to perform various mathematical operations on arrays, while the torch is an open-source ML library for creating deep neural networks. 
+
+The 'Patient2Vec' class, inheriting from the 'torch.nn' Module, is a self-attentive framework for representation learning. It incorporates a convolutional embedding layer, a recurrent autoencoder with an encoder, a recurrent module, and a decoder. Notably, a linear layer follows each decoding step, with shared weights. This design allows the framework to automatically focus on important aspects of the input data, extract meaningful features, and generate efficient representations.
+
+In this code, we have created six functions: 'init', 'init_weights', 'convolutional_layer', 'encode_rnn', 'add_beta_attention', 'forward', and 'get_loss'.
+ 
+The 'init' function initializes the model's structure and requires 13 parameters, such as input size, hidden size, number of layers, attention dimension, and initialization range. These parameters define various aspects of the model, including its layers, dimensions, and sequence length.
+
+The 'init_weights' function is called for the weight initialization of the model by using uniform random values within the specified range. 
+
+The 'convolutional_layer' function is called to perform the convolutional(shape that is folded in curved) operations on the input data using the convolutional layers defined in the method. Also, the activation function 'self.func_tanh' is applied and the resulting output is returned.
+
+The 'encode_rnn' function is called to perform the encoding step using a Recurrent Neural Network (RNN). Embedding and batch size are taken as input parameters and the RNN outputs are returned.
+
+The 'add_beta_attention' function is called to implement the beta attention mechanism in the model. On the basis of the output states from the RNN, the attention weights are calculated. Then, attention weights and context vectors are returned.
+
+The 'forward' function is called for the forward pass of the model. It takes inputs, other input variables, and batch size as parameters. The method performs the convolutional(shape that is folded in curved) operation, encoding with RNN, adds attention, and passes the context vector through a linear layer to get the final output.
+
+The 'get_loss' function is called to calculate the loss on the basis of the predicted values, actual values, criterion, and the beta matrix. Additional loss based on the attention weights is calculated and the (aai) and 'total loss' is returned.
+
+Explanation of png file:
+
+This image file shows the Patient2Vec System Model, This framework uses deep recurrent neural networks to capture the complex relationships between clinical events in the patient’s EHR data and employs the attention mechanism to learn a personalized representation and to obtain relative feature importance.
+
+The model contains 4 steps:
+
+1). Learning Vector Representations of Medical Codes: In EHR data, visit records contain clinical codes representing diagnoses, procedures, and other events. Treating these codes as words, we apply the word2vec approach to create vector representations for each code, enabling meaningful analysis and interpretation.
+
+2). Learning Within-Subsequence Self-Attention: To ensure that closely-spaced clinical visits are considered together, we use a time window to divide the visit sequence into equal-length subsequences. These subsequences may contain multiple visits or be empty. This transformation is beneficial for recurrent neural networks. The width of the subsequence window determines the time granularity and should be optimized based on the stability of clinical characteristics relevant to the prediction task. Since not all medical events in a subsequence have equal importance, a self-attention mechanism is utilized to train the network and assign weights to the events.
+
+3). Learning Subsequence-Level Self-Attention: While using a recurrent neural network to capture temporal dependencies between medical events in subsequences, it is important to acknowledge that not all subsequences contribute equally to the outcome. To address this, we introduce an additional level of attention within the network to learn the weights of the subsequences for accurate outcome prediction.
+
+4). Constructing Aggregated Deep Representation: The learned weights and hidden outputs are combined to create a single universal vector representing a patient's comprehensive information. This aggregation step includes incorporating static information like age, gender, and previous hospitalization history as additional features, resulting in a complete patient representation.
+
+and at the end, we predict outcomes for which we add a logistic regression layer.
+So above 4 steps in the flowchart represents the process of managing and analyzing the medical data of a patient. Initially, the patient's visits to the hospital are stored in an array, with each element containing the relevant medical data provided during that visit. This data is transformed into a vector representation to enable the implementation of appropriate medical codes. The array is then sorted based on specific medical conditions, allowing the identification of the medical problem that led to a higher number of hospital visits for the patient. This information, along with the prescribed medications for each problem, is stored in the hospital's database for future reference. When the patient visits in the future, their medical characteristics are analyzed and linked with the previous data, enabling accurate and efficient prediction of the solution to their medical problem.
+
+Significance of EHR:
+
+Electronic Health Records (EHR) are digital platforms that store comprehensive medical information. Their significance stems from several key benefits. EHR provides healthcare professionals with quick access to patient data, regardless of their location, enabling prompt decision-making and improved treatment coordination. It reduces medication errors and enhances patient safety through alerts and accurate documentation. EHR facilitates efficient information sharing among hospitals, doctors, and specialists, minimizing errors and unnecessary procedures. It generates valuable data for analysis, leading to improved healthcare outcomes and evidence-based decisions. While the initial investment is required, EHR systems result in long-term cost savings by streamlining operations and reducing paperwork. Additionally, EHR empowers patients by offering access to their health information and promoting engagement in their own care. Overall, EHR optimizes healthcare delivery, ensuring better outcomes, safety, and collaboration.
+
+Conclusion:
+
+In this research paper, we introduce a representation learning framework called Patient2Vec, which utilizes recurrent neural networks and attention mechanisms to learn personalized and interpretable deep representations of Electronic Health Record (EHR) data. Our framework enhances predictive models and provides deeper insights into disease correlations. We specifically apply Patient2Vec to predict the risk of hospitalization using longitudinal EHR data. The experimental results demonstrate that our proposed framework outperforms baseline approaches in terms of prediction accuracy. Additionally, the learned representations offer interpretability at both individual and population levels, enabling valuable clinical insights. While our evaluation focuses on all-cause hospitalization risk, the Patient2Vec framework has the potential to be applied to different populations, diverse health prediction problems, and even non-health domains in the future.
+
+
